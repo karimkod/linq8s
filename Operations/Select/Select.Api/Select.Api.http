@@ -1,0 +1,8 @@
+@Select.Api_HostAddress = http://localhost:5166
+
+GET {{Select.Api_HostAddress}}/select/
+Accept: application/json
+
+
+
+###
