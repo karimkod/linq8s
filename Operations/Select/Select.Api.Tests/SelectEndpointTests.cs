@@ -62,6 +62,23 @@ public class SelectEndpointTests
          resultBody.Should().Be("""[{"name":"abdelkrim","age":10}]""");       
     }
     
+    [Fact]
+    public async Task GivenFieldThatDontExistInObject_ThenReturnNull()
+    {
+         using var body = new StringContent("""
+                                            {
+                                                "data": [{"name": "abdelkrim", "age":10, "birthplace": "Algeria"}],
+                                                "fields": ["gender"]
+                                            }
+                                            """, MediaTypeHeaderValue.Parse(MediaTypeNames.Application.Json));
+         var result = await _client.PostAsync("/select", body);
+         result.StatusCode.Should().Be(HttpStatusCode.OK);
+         var resultBody = await result.Content.ReadAsStringAsync();
+         resultBody.Should().Be("""[{"gender":null}]""");       
+    }
+    
+    
+    
     [Fact(Skip = "Not supported yet.")]
     public async Task GivenListWithNestedJsonObject_ThenReturnProjectedList()
     {

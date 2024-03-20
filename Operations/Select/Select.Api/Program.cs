@@ -23,15 +23,11 @@ app.MapPost("/select", (SelectInput input) =>
         Func<JsonNode, Dictionary<string, dynamic>> selector = (element) =>
         {
             var projection = new Dictionary<string, dynamic>();
-            var projections = input.fields.Select(
-                field =>
-                    new KeyValuePair<string, dynamic>(field, element[field])
-            );
-            foreach (var keyValuePair in projections)
+            foreach (var field in input.fields)
             {
-                projection.Add(keyValuePair.Key, keyValuePair.Value);
+                projection.Add(field, element[field]);
+                
             }
-
             return projection;
         };
 
